@@ -10,9 +10,7 @@ namespace Bank_System_Aanlysis_EF
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext()
-        {
-        }
+        
         //my entities
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Admin> Admins { get; set; }

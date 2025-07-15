@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bank System Aanlysis EF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9cd60d74cafccf0b1e0005bdeae7228864a4e3f0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bank System Aanlysis EF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bank System Aanlysis EF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

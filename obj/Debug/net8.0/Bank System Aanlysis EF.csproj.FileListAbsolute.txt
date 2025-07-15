@@ -130,3 +130,4 @@ D:\ITI\Bank System Aanlysis EF\obj\Debug\net8.0\refint\Bank System Aanlysis EF.d
 D:\ITI\Bank System Aanlysis EF\obj\Debug\net8.0\Bank System Aanlysis EF.pdb
 D:\ITI\Bank System Aanlysis EF\obj\Debug\net8.0\Bank System Aanlysis EF.genruntimeconfig.cache
 D:\ITI\Bank System Aanlysis EF\obj\Debug\net8.0\ref\Bank System Aanlysis EF.dll
+D:\ITI\Bank System Aanlysis EF\obj\Debug\net8.0\Bank System Aanlysis EF.sourcelink.json
