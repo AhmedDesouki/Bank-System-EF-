@@ -69,24 +69,38 @@ namespace Bank_System_Aanlysis_EF
                 customerId = accountId
             });
 
-            Appcontext.SaveChanges();
+            if(customer!=null )
+            {
+                Appcontext.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("Failed to save to database");
+            }
+            
         }
 
         public void Withdraw(int accountId, decimal amount)
         {
           
             var customer = Appcontext.Customers.Find(accountId);
-            customer.Balance -= amount;
 
-            Appcontext.Transactions.Add(new Transaction
+            if(customer.Balance >= amount)
             {
-                Type= "Withdraw",
-                Amount = amount,
-                Date = DateTime.Now,
-                customerId = accountId
-            });
+                customer.Balance -= amount;
 
-            Appcontext.SaveChanges();
+                Appcontext.Transactions.Add(new Transaction
+                {
+                    Type = "Withdraw",
+                    Amount = amount,
+                    Date = DateTime.Now,
+                    customerId = accountId
+                });
+
+                Appcontext.SaveChanges();
+            }
+            else { Console.WriteLine("Your Balance less than amount"); }
+            
         }
 
         public List<Transaction> View_transaction_history(int customerId)
@@ -103,7 +117,7 @@ namespace Bank_System_Aanlysis_EF
 
                 //foreach (var transaction in allTransactions)
                 //{
-
+                //    Console.WriteLine($"Transaction ID: {transaction.Id} Type: {transaction.Type} Amount: {transaction.Amount} Date: {transaction.Date}");
                 //}
                 return allTransactions;
             }
