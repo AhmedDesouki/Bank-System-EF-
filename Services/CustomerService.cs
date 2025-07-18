@@ -124,5 +124,18 @@ namespace Bank_System_Aanlysis_EF
 
            return new List<Transaction>();
         }
+
+        public decimal View_balance(int customerId)
+        {
+            //find customer return balance 
+            var customer = Appcontext.Customers.Find(customerId);
+            if (customer!=null) {
+                decimal balance = customer.Balance;
+
+                return balance;
+            }
+            return 0;
+
+        } 
     }
 }

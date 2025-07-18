@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Bank_System_Aanlysis_EF.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Bank_System_Aanlysis_EF
@@ -19,13 +20,21 @@ namespace Bank_System_Aanlysis_EF
                 Console.WriteLine("2. Deposit");
                 Console.WriteLine("3. Withdraw");
                 Console.WriteLine("4. View Transactions History");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. View Balance");
+                
+                Console.WriteLine("............................Admin................");
+                Console.WriteLine("6. View All Customers");
+                Console.WriteLine("7. Search Customer");
+                Console.WriteLine("8. wealthy Customers (Using sql queries)");
+
+                Console.WriteLine("10. Exit");
                 Console.Write("Select an option: ");
                 var option = Console.ReadLine();
 
                 using (var context = new ApplicationDbContext())
                 {
                     CustomerService customerservice = new CustomerService(context);
+                    AdminService adminservice = new AdminService(context);
 
                     switch (option)
                     {
@@ -42,6 +51,18 @@ namespace Bank_System_Aanlysis_EF
                             ViewTransHistory(customerservice);
                             break;
                         case "5":
+                            ViewBalance(customerservice);
+                            break;
+                        case "6":
+                            AllCustomers(adminservice);
+                            break;
+                        case "7":
+                            SearchCustomer(adminservice);
+                            break;
+                        case "8":
+                            wealthycustomers(adminservice);
+                            break;
+                        case "10":
                             exit = true;
                             break;
                         default:
@@ -134,7 +155,47 @@ namespace Bank_System_Aanlysis_EF
                 }
                 Console.WriteLine($"DONE");
                 Console.ReadKey();
-            }   
+            }  
+            
+            static void ViewBalance(CustomerService service)
+            {
+                Console.Write("Enter customer ID: ");
+                if (!int.TryParse(Console.ReadLine(), out int customerId))
+                {
+                    Console.WriteLine("Invalid customer ID");
+                    return;
+                }
+                decimal cutomerBalance=service.View_balance(customerId);
+                Console.WriteLine($"your balance is : {cutomerBalance}$");
+                Console.ReadKey();
+            }
+
+            static void AllCustomers(AdminService service)
+            {
+                service.AllCustomers();
+            }
+            static void SearchCustomer(AdminService service)
+            {
+                Console.Write("Enter customer ID: ");
+                if (!int.TryParse(Console.ReadLine(), out int customerId))
+                {
+                    Console.WriteLine("Invalid customer ID");
+                    return;
+                }
+                service.SearchCustomer(customerId);
+            }
+
+            static void wealthycustomers(AdminService service)
+            {
+                var wealthyCustomers= service.wealthyCustomers();
+
+                foreach (var customer in wealthyCustomers)
+                {
+                    Console.WriteLine($"Name : {customer.Name} Balance : {customer.Balance}");
+                }
+                Console.ReadKey();
+
+            }
 
         }
     }
