@@ -9,8 +9,8 @@ namespace Bank_System_Aanlysis_EF
         static void Main(string[] args)
         {
 
+            CustomerService.Alert += ShowMessage;
 
-            
             bool exit = false;
             while (!exit)
             {
@@ -33,6 +33,7 @@ namespace Bank_System_Aanlysis_EF
 
                 using (var context = new ApplicationDbContext())
                 {
+                    
                     CustomerService customerservice = new CustomerService(context);
                     AdminService adminservice = new AdminService(context);
 
@@ -73,6 +74,13 @@ namespace Bank_System_Aanlysis_EF
                 }
             }
 
+           
+
+            static void ShowMessage(string type)
+            {
+                Console.WriteLine($"{type} Successful !");
+                
+            }
             static void CreateCustomer(CustomerService service)
             {
                 Console.Write("Enter customer name: ");
@@ -94,7 +102,6 @@ namespace Bank_System_Aanlysis_EF
 
                 service.CreateCustomer(name, age);
                 Console.WriteLine($"DONE");
-                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
             }
 

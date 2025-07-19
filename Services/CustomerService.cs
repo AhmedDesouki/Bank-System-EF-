@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace Bank_System_Aanlysis_EF
     public class CustomerService
     {
         private readonly ApplicationDbContext Appcontext; //NULLLLL
+
+        public delegate void TransactionAlert(string type);
+        public static event TransactionAlert? Alert;
+
         public CustomerService()
         {
             
@@ -60,10 +65,10 @@ namespace Bank_System_Aanlysis_EF
 
             var customer = Appcontext.Customers.Find(accountId);
             customer.Balance += amount;
-
+            string type = "Deposit";
             Appcontext.Transactions.Add(new Transaction
             {
-                Type = "Deposit",
+                Type = type,
                 Amount = amount,
                 Date = DateTime.Now,
                 customerId = accountId
@@ -72,6 +77,9 @@ namespace Bank_System_Aanlysis_EF
             if(customer!=null )
             {
                 Appcontext.SaveChanges();
+                // notify 
+
+                Alert?.Invoke(type);
             }
             else
             {
@@ -88,16 +96,17 @@ namespace Bank_System_Aanlysis_EF
             if(customer.Balance >= amount)
             {
                 customer.Balance -= amount;
-
+                String type = "Withdraw";
                 Appcontext.Transactions.Add(new Transaction
                 {
-                    Type = "Withdraw",
+                    Type = type,
                     Amount = amount,
                     Date = DateTime.Now,
                     customerId = accountId
                 });
 
                 Appcontext.SaveChanges();
+                Alert?.Invoke(type);
             }
             else { Console.WriteLine("Your Balance less than amount"); }
             
